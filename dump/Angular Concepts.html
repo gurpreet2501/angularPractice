@@ -1,0 +1,56 @@
+// Angular Concepts
+// 1. Controller - Mapping between view to send and receive data. two way binding.
+// 2. Directives are basically the html part. Like in fixt we created map directive and on dashboard two directives are build one for open jobs and one for scheduled
+// 3. Factories are basically helpers. We can use factories as dependencies in controllers and directives.
+
+// eg. 
+angular.module('moduleName',['dependencies']);
+
+// Module dependencies can be other modules only. Factories or any services cant be the dependencies of the modules.
+
+// lets talk about factories
+
+// Factories are just like helpers in codeignitor as we have discussed above. 
+
+// they are used for calculation and other work. The functions in factories receive arguments and return accordingly.
+
+// then these factories can be used as dependencies in controllers , and other directives where we need them.
+
+// Lets take a look
+
+  angular.module('testApp.factories').factory('api',[function(){
+    var fac = {
+      getUser: function(userID){
+        return {
+          first_name  : "Gurpreet",
+          last_name   : "Singh"
+        };
+      },
+      
+      getUserFirstname : function(userID){
+        var user = fac.getUser(userID)
+        return user.first_name;
+      },
+      
+    };
+    
+    return fac;
+    
+  }]);              
+
+  // The above code is a single factory.
+
+  var ctrl = angular.module('testApp.controllers');  
+                
+  ctrl.controller('homeCtrl',['api','$scope', function(api, $scope){
+    
+    $scope.hello = 'World!';
+    $scope.user = api.getUser(12);
+    
+  }]);
+
+// In the homeCtrl we have used the api factory as its dependency.
+
+
+
+
